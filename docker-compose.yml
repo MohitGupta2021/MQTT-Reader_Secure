@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  # Mosquitto MQTT Broker Service
+  mosquitto: 
+    image: eclipse-mosquitto:latest # Use the latest Mosquitto image
+    ports:
+      - "1883:1883" # Expose port 1883 for MQTT
+      - "8883:8883" # Expose port 8883 for MQTT over SSL/TLS
+    volumes: 
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro # Read-only configuration file for Mosquitto
+      - ./config/acl_file:/mosquitto/config/acl_file:ro # Read-only ACL file for access control
+      - ./config/password_file:/mosquitto/config/password_file:rw # Read-write password file for user authentication
+      - ./certs_copy:/mosquitto/config/certs # Mount directory containing SSL/TLS certificates
+    networks:  
+      - mosquitto # Connect to the custom bridge network
+
+  # MQTT Publisher Service
+  mqtt-pub: 
+    image: eclipse-mosquitto:latest # Use the latest Mosquitto image
+    command: sh -c "mosquitto_pub -h mosquitto -p 8883 -t /events -m '{\"sensor_value\":20.2}' --cafile /mosquitto/config/certs/ca-root.crt --key /mosquitto/config/certs/mosquitto.key --cert /mosquitto/config/certs/mosquitto.crt -u admin -P password -d --insecure "
+    depends_on:  
+      - mosquitto # Ensure Mosquitto service is started before this service
+    volumes: 
+      - ./certs_copy:/mosquitto/config/certs # Mount directory containing SSL/TLS certificates
+    networks:
+      - mosquitto # Connect to the custom bridge network
+
+  # MQTT Subscriber Service
+  mqtt-sub: 
+    image: eclipse-mosquitto:latest # Use the latest Mosquitto image
+    command: sh -c "mosquitto_sub -h mosquitto -p 8883 -t /events --cafile /mosquitto/config/certs/ca-root.crt --key /mosquitto/config/certs/mosquitto.key --cert /mosquitto/config/certs/mosquitto.crt -u admin -P password -d --insecure"
+    depends_on:
+      - mosquitto # Ensure Mosquitto service is started before this service
+    volumes: 
+      - ./certs_copy:/mosquitto/config/certs # Mount directory containing SSL/TLS certificates
+    networks:
+      - mosquitto # Connect to the custom bridge network
+
+  # Python Subscriber Service (commented out)
+  # python-subscriber: 
+  #   build: .  
+  #   volumes:
+  #     - ./certs_copy:/app/certs  # Mount certificates directory to the container
+  #   depends_on:
+  #     - mosquitto # Ensure Mosquitto service is started before this service
+  #   networks:
+  #     - mosquitto # Connect to the custom bridge network
+
+networks:  
+  mosquitto:
+    driver: bridge # Use bridge network driver for isolation
