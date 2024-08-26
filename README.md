@@ -11,7 +11,7 @@ Overview: The MQTT-Reader_Secure project is dedicated to developing a secure MQT
 Docker Container: The Mosquitto MQTT broker operates within a Docker container.
 Configuration: Employs SSL/TLS for secure communication, managed via a Docker Compose file which includes configurations for the broker, publisher, subscriber, and Python application services.
 Python MQTT Client:
-
+- [ ] https://github.com/octo-org/octo-repo/issues/740
 ### Scripts:
 mqtt_subscriber_8883.py for secure connections.
 mqtt_subscriber_1883.py for non-secure connections.
