@@ -97,3 +97,10 @@ mosquitto_sub -h localhost -p 1883 -t /events -d
 ### Additional Information
 Prerequisites: Ensure Docker and Docker Compose are installed on your system.
 Documentation: For further configuration or troubleshooting, consult the repository's documentation or contact the repository maintainer.
+
+### References
+Configuration file: https://mosquitto.org/man/mosquitto-conf-5.html
+Mosquitto Authentication: https://mosquitto.org/documentation/authentication-methods/ Self signed certificates: https://en.wikipedia.org/wiki/Self-signed_certificate
+Open SSL: https://www.openssl.org/docs/manmaster/man1/
+Mosquitto Pub: https://mosquitto.org/man/mosquitto_pub-1.html
+Mosquitto Sub: https://mosquitto.org/man/mosquitto_sub-1.html
