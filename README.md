@@ -47,7 +47,7 @@ To start, clone the repository to your local machine:
 git clone https://github.com/MohitGupta2021/MQTT-Reader_Secure.git
 
 ### 2.Navigate to the cloned directory:
-cd MQTT-Reader
+cd MQTT-Reader_Secure
 
 ### 3.Verify the directory contents:
 ls
@@ -66,7 +66,25 @@ docker-compose run --rm mqtt-sub
 
 ### 7. Subscribing to Data through the Python Application
 To subscribe to data using the Python application, run:
-docker-compose run --rm python-subscriber
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip list
+### 8. Run the python scripts
+for secure connections:
+python mqtt_subscriber_8883.py
+For non-secure connections:
+python mqtt_subscriber_1883.py 
+###  Running Mosquitto Clients with SSL
+Publish:
+mosquitto_pub -h localhost -p 8883 -t /events  -m "{“sensor_value”:20.2}" --cafile certs_copy/ca-root.crt --key certs_copy/mosquitto.key --cert certs_copy/mosquitto.crt -d 
+Subscribe:
+mosquitto_sub -h localhost -p 8883 -t /events  --cafile certs_copy/ca-root.crt --key certs_copy/mosquitto.key --cert certs_copy/mosquitto.crt -d
+### Running Mosquitto Clients without SSL
+Publish:
+mosquitto_pub -h localhost -p 1883 -t /events  -m "{“sensor_value”:20.2}"  -d
+Subsribe:
+mosquitto_sub -h localhost -p 1883 -t /events -d
 
 ### Additional Information
 Prerequisites: Ensure Docker and Docker Compose are installed on your system.
