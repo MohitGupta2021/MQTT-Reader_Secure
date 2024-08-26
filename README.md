@@ -3,10 +3,13 @@
 ## Project Name: MQTT-Reader_Secure
 
 Overview: The MQTT-Reader_Secure project is dedicated to developing a secure MQTT client that communicates with an MQTT broker through SSL/TLS encryption. This project encompasses the establishment of a Docker environment for running the Mosquitto MQTT broker and a Python application utilizing the gmqtt library for secure subscription to MQTT topics. The client ensures secure communication through authentication and encryption via certificates.
-For Result:
+# For Result:
 - [ ] https://github.com/MohitGupta2021/MQTT-Reader_Secure/blob/main/result_ssl_without_ssl.pdf
-For Non Secure MQTT-Reader with complete setup 
+
+
+# For Non Secure MQTT-Reader with complete setup 
 - [ ] https://github.com/MohitGupta2021/MQTT-Reader
+
 # Components:
 
 ### Mosquitto MQTT Broker:
@@ -28,7 +31,7 @@ Message Handling: Asynchronously processes incoming messages and disconnections.
 CA Certificate: Used to validate the broker’s certificate.
 Client Certificate and Key: Used for client authentication to the broker.
 Certificate Generation: Generated via OpenSSL, with documentation provided in the project repository for reference. File paths are dynamically constructed relative to the script's location to ensure portability.
-For Certification follows this documents:
+# For Certification follows this documents:
 - [ ] https://github.com/MohitGupta2021/MQTT-Reader_Secure/blob/main/Generating%20Local%20CA%20and%20Certificates%20Using%20SSL.pdf
 ### Docker Setup:
 
